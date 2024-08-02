@@ -1,4 +1,4 @@
-# Flash_Card_App
+# Flash_Card_App (Spanish)
 Flash Card App built in Python
 
 This flash card app is based on the first chapter of the book Aventuras Sixth Edition, which is and/or was a 
