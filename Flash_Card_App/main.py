@@ -99,7 +99,7 @@ window = Tk()
 window.title("Flash Cards")
 window.config(padx=50, pady=50, bg=BACKGROUND_COLOR)
 
-# Window demention card and text position
+# Window dimension, card, and text position
 canvas = Canvas(width=800, height=600)
 card_front_img = PhotoImage(file="card_front.png")
 card_back_img = PhotoImage(file="card_back.png")
@@ -109,7 +109,7 @@ card_word = canvas.create_text(400, 263, text="", font=("Ariel", 50, "bold"))
 canvas.config(bg=BACKGROUND_COLOR, highlightthickness=0)
 canvas.grid(row=0, column=0, columnspan=2)
 
-# flip button position 
+# Flip button position 
 flip_image = PhotoImage(file="flip.png")
 flip_button = Button(image=flip_image, highlightthickness=0, command=flip_card)
 flip_button.grid(row=1, column=1)
