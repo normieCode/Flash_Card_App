@@ -9,4 +9,5 @@ different. Just delete the current Learn.csv and copy the one you want to learn 
 folder. This is so you don’t have to change the names in the app, you simply copy the one you want 
 to learn and delete the current file. Chapter one is the default Learn.csv.
 
-It is currently based on Spanish but you can copy any comma seperated list into the Learn.csv file and line one will populate the header of each card.
+It is currently based on Spanish but you can copy any comma seperated list into the Learn.csv file 
+and line one will populate the header of each card.
