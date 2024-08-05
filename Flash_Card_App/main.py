@@ -16,13 +16,16 @@ def read_csv(filename):
         with open(filename, mode='r', encoding='utf-8') as file:
             reader = csv.DictReader(file)
             data = list(reader)
+            if data:
+                global front_header, back_header
+                front_header, back_header = reader.fieldnames[:2]  # Get the first two column headers
             return data
     except FileNotFoundError:
         print(f"File {filename} not found.")
         return []
 
 # Initialize data
-learn = read_csv("Spanish.csv")
+learn = read_csv("Learn.csv")
 
 def initialize_cards():
     global cards_list
@@ -56,32 +59,32 @@ def next_card():
         else:
             # Ensure index is within range
             if current_index >= len(learn):
-                current_index = 0  # Reset index if list length exceded
+                current_index = 0  # Reset index if list length exceeded
             current_card = learn[current_index]
             current_index += 1
 
-        # Retrieves the Spanish side from current_card and wraps the text 
-        spanish_text = wrap_text(current_card.get("Spanish", "Key 'Spanish' not found"), MAX_LINE_LENGTH)
-        canvas.itemconfig(card_title, text="Spanish", fill="black")
-        canvas.itemconfig(card_word, text=spanish_text, fill="black")
+        # Retrieves the first side from current_card and wraps the text 
+        learn_text = wrap_text(current_card.get(front_header, "Key not found"), MAX_LINE_LENGTH)
+        canvas.itemconfig(card_title, text=front_header, fill="black")
+        canvas.itemconfig(card_word, text=learn_text, fill="black")
         canvas.itemconfig(card_background, image=card_front_img)
     else:
         canvas.itemconfig(card_title, text="No words left", fill="black")
         canvas.itemconfig(card_word, text="", fill="black")
         canvas.itemconfig(card_background, image=card_front_img)
 
-# Toggles the display of the flashcard between Spanish and English
+# Toggles the display of the flashcard between Spanish and English (or other)
 def flip_card():
     if current_card: 
-        if canvas.itemcget(card_title, "text") == "Spanish":
-            english_text = wrap_text(current_card.get("English", "Key 'English' not found"), MAX_LINE_LENGTH)
-            canvas.itemconfig(card_title, text="English", fill="white")
+        if canvas.itemcget(card_title, "text") == front_header:
+            english_text = wrap_text(current_card.get(back_header, "Key not found"), MAX_LINE_LENGTH)
+            canvas.itemconfig(card_title, text=back_header, fill="white")
             canvas.itemconfig(card_word, text=english_text, fill="white")
             canvas.itemconfig(card_background, image=card_back_img)
         else:
-            spanish_text = wrap_text(current_card.get("Spanish", "Key 'Spanish' not found"), MAX_LINE_LENGTH)
-            canvas.itemconfig(card_title, text="Spanish", fill="black")
-            canvas.itemconfig(card_word, text=spanish_text, fill="black")
+            learn_text = wrap_text(current_card.get(front_header, "Key not found"), MAX_LINE_LENGTH)
+            canvas.itemconfig(card_title, text=front_header, fill="black")
+            canvas.itemconfig(card_word, text=learn_text, fill="black")
             canvas.itemconfig(card_background, image=card_front_img)
 
 # Random toggle function 
@@ -99,7 +102,7 @@ window = Tk()
 window.title("Flash Cards")
 window.config(padx=50, pady=50, bg=BACKGROUND_COLOR)
 
-# Window dimension, card, and text position
+# Window dimensions card and text position
 canvas = Canvas(width=800, height=600)
 card_front_img = PhotoImage(file="card_front.png")
 card_back_img = PhotoImage(file="card_back.png")
